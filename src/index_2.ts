@@ -3,60 +3,59 @@
 // Academic status: active, academic leave, graduated, expelled
 
 class UniversityError extends Error {
-    constructor(message) {
+    constructor(message: string) {
         super(message);
         this.name = "UniversityError";
     }
 }
 
 class University {
-    name;
-    courses = [];
-    groups = [];
-    people = [];
-
-    constructor(name) {
+    name: string;
+    courses: object[] = [];
+    groups: { course: string }[] = [];
+    people: { role: string }[] = [];
+    constructor(name: string) {
         this.name = name;
     }
 
-    addCourse(course) {
+    addCourse(course: object): void {
         this.courses.push(course);
     }
 
-    addGroup(group) {
+    addGroup(group: { course: string }): void {
         this.groups.push(group);
     }
 
-    addPerson(person) {
+    addPerson(person: { role: string }): void {
         this.people.push(person);
     }
 
-    findGroupByCourse(course) {
-        return this.groups.find((group) => group.course === course);
+    findGroupByCourse(course: string) {
+        return this.groups.find((group: { course: string }) => group.course === course);
     }
 
-    getAllPeopleByRole(role) {
+    getAllPeopleByRole(role: string | object): object[] | void {
         switch (role) {
             case "student":
-                return this.people.filter((person) => person.role === "student");
+                return this.people.filter((person: { role: string }) => person.role === "student");
             case "teacher":
-                return this.people.filter((person) => person.role === "teacher");
+                return this.people.filter((person: { role: string }) => person.role === "teacher");
             default:
                 return this.assertNeverRole(role);
         }
     }
 
-    assertNeverRole(role) {
+    assertNeverRole(role: string | object) {
         throw new Error(`Unhandled role: ${role}`);
     }
 }
 
 class Course {
-    name;
-    credits;
-    discipline;
+    name: string;
+    credits: string;
+    discipline: string;
 
-    constructor(name, discipline, credits) {
+    constructor(name: string, discipline: string, credits: string) {
         this.name = name;
         this.credits = credits;
         this.discipline = discipline;
@@ -64,18 +63,18 @@ class Course {
 }
 
 class Group {
-    name;
-    course;
-    teacher;
-    students = [];
+    name: string;
+    course: string;
+    teacher: string;
+    students: any = [];
 
-    constructor(name, course, teacher) {
+    constructor(name: string, course: string, teacher: string) {
         this.name = name;
         this.course = course;
         this.teacher = teacher;
     }
 
-    addStudent(student) {
+    addStudent(student: object): void {
         if (this.students.includes(student)) {
             throw new UniversityError("Student is already in the group");
         }
@@ -83,8 +82,8 @@ class Group {
         this.students.push(student);
     }
 
-    removeStudentById(id) {
-        const index = this.students.findIndex((student) => student.id === id);
+    removeStudentById(id: string) {
+        const index = this.students.findIndex((student: any) => student.id === id);
 
         if (!~index) {
             throw new UniversityError("Student not found in group");
@@ -99,7 +98,7 @@ class Group {
         }
 
         const totalScore = this.students.reduce(
-            (sum, student) => sum + student.getAverageScore(),
+            (sum: number, student: any) => sum + student.getAverageScore(),
             0
         );
 
@@ -114,15 +113,15 @@ class Group {
 class Person {
     static nextId = 1;
 
-    firstName;
-    lastName;
-    birthDay;
-    id;
-    gender;
-    contactInfo;
-    role;
+    firstName:string;
+    lastName:string;
+    birthDay:any;
+    id: number;
+    gender:string;
+    contactInfo: object;
+    role:string;
 
-    constructor(info, role) {
+    constructor(info: any, role: string) {
         const { firstName, lastName, birthDay, gender, email, phone } = info;
 
         this.firstName = firstName;
@@ -139,9 +138,9 @@ class Person {
     }
 
     get age() {
-        const today = new Date();
-        let age = today.getFullYear() - this.birthDay.getFullYear();
-        const monthDiff = today.getMonth() - this.birthDay.getMonth();
+        const today: any = new Date();
+        let age: number = today.getFullYear() - this.birthDay.getFullYear();
+        const monthDiff: number = today.getMonth() - this.birthDay.getMonth();
 
         if (
             monthDiff < 0 ||
@@ -155,19 +154,19 @@ class Person {
 }
 
 class Teacher extends Person {
-    specializations = [];
-    courses = [];
+    specializations: object[] = [];
+    courses: { name: string }[] = [];
 
-    constructor(info, specializations = []) {
+    constructor(info: string, specializations = []) {
         super(info, "teacher");
         this.specializations = specializations;
     }
 
-    assignCourse(course) {
+    assignCourse(course: { name: string }) {
         this.courses.push(course);
     }
 
-    removeCourse(courseName) {
+    removeCourse(courseName: string) {
         this.courses = this.courses.filter((course) => course.name !== courseName);
     }
 
@@ -181,15 +180,15 @@ class Student extends Person {
         totalCredits: 0,
         gpa: 0,
     };
-    enrolledCourses = [];
-    status;
+    enrolledCourses: { name: string; credits: number; }[] = [];
+    status: string;
 
-    constructor(info) {
+    constructor(info: string) {
         super(info, "student");
         this.status = "active";
     }
 
-    enrollCourse(course) {
+    enrollCourse(course: any) {
         if (this.status !== "active") {
             throw new UniversityError(
                 "Cannot enroll: Student is not in active status"
@@ -204,7 +203,7 @@ class Student extends Person {
         return this.academicPerformance.gpa;
     }
 
-    updateAcademicStatus(newStatus) {
+    updateAcademicStatus(newStatus: string) {
         this.status = newStatus;
     }
 
