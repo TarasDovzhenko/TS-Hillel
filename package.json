@@ -1,5 +1,9 @@
 {
   "devDependencies": {
     "eslint": "^9.17.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
   }
 }
