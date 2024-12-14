@@ -30,11 +30,11 @@ class University {
         this.people.push(person);
     }
 
-    findGroupByCourse(course: string) {
+    findGroupByCourse(course: string): { course: string } | undefined {
         return this.groups.find((group: { course: string }) => group.course === course);
     }
 
-    getAllPeopleByRole(role: string | object): object[] | void {
+    getAllPeopleByRole(role: string | object): { role: string } | object {
         switch (role) {
             case "student":
                 return this.people.filter((person: { role: string }) => person.role === "student");
@@ -45,7 +45,7 @@ class University {
         }
     }
 
-    assertNeverRole(role: string | object) {
+    assertNeverRole(role: string | object): never {
         throw new Error(`Unhandled role: ${role}`);
     }
 }
@@ -82,7 +82,7 @@ class Group {
         this.students.push(student);
     }
 
-    removeStudentById(id: string) {
+    removeStudentById(id: string): void {
         const index = this.students.findIndex((student: any) => student.id === id);
 
         if (!~index) {
@@ -92,7 +92,7 @@ class Group {
         this.students.splice(index, 1);
     }
 
-    getAverageGroupScore() {
+    getAverageGroupScore(): number {
         if (this.students.length) {
             return 0;
         }
@@ -105,13 +105,13 @@ class Group {
         return totalScore / this.students.length;
     }
 
-    getStudents() {
+    getStudents(): object {
         return [...this.students];
     }
 }
 
 class Person {
-    static nextId = 1;
+    static nextId: number = 1;
 
     firstName:string;
     lastName:string;
@@ -133,11 +133,11 @@ class Person {
         this.role = role;
     }
 
-    get fullName() {
+    get fullName(): string {
         return `${this.lastName} ${this.firstName}`;
     }
 
-    get age() {
+    get age(): number {
         const today: any = new Date();
         let age: number = today.getFullYear() - this.birthDay.getFullYear();
         const monthDiff: number = today.getMonth() - this.birthDay.getMonth();
@@ -157,20 +157,20 @@ class Teacher extends Person {
     specializations: object[] = [];
     courses: { name: string }[] = [];
 
-    constructor(info: string, specializations = []) {
+    constructor(info: string, specializations: object[] = []) {
         super(info, "teacher");
         this.specializations = specializations;
     }
 
-    assignCourse(course: { name: string }) {
+    assignCourse(course: { name: string }): void {
         this.courses.push(course);
     }
 
-    removeCourse(courseName: string) {
+    removeCourse(courseName: string): void {
         this.courses = this.courses.filter((course) => course.name !== courseName);
     }
 
-    getCourses() {
+    getCourses(): object[] {
         return [...this.courses];
     }
 }
@@ -188,7 +188,7 @@ class Student extends Person {
         this.status = "active";
     }
 
-    enrollCourse(course: any) {
+    enrollCourse(course: any): any {
         if (this.status !== "active") {
             throw new UniversityError(
                 "Cannot enroll: Student is not in active status"
@@ -199,15 +199,15 @@ class Student extends Person {
         this.academicPerformance.totalCredits += course.credits;
     }
 
-    getAverageScore() {
+    getAverageScore(): number {
         return this.academicPerformance.gpa;
     }
 
-    updateAcademicStatus(newStatus: string) {
+    updateAcademicStatus(newStatus: string): void {
         this.status = newStatus;
     }
 
-    getEnrolledCourses() {
+    getEnrolledCourses(): object[] {
         return [...this.enrolledCourses];
     }
 }
