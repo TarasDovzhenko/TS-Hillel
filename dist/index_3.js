@@ -1,4 +1,23 @@
 "use strict";
+// Academic performance: total credits, gpa
+// Person info: first name, last name, birth day, gender: male, female, other
+// Contact info = ...
+// Full person info = ...;
+var Role;
+(function (Role) {
+    Role["Student"] = "student";
+    Role["Teacher"] = "teacher";
+})(Role || (Role = {}));
+var Status;
+(function (Status) {
+    Status["Active"] = "active";
+})(Status || (Status = {}));
+var Gender;
+(function (Gender) {
+    Gender["Male"] = "male";
+    Gender["Female"] = "female";
+    Gender["Other"] = "other";
+})(Gender || (Gender = {}));
 const defaultContact = {
     email: "info@university.com",
     phone: "+380955555555",
@@ -114,7 +133,7 @@ class Person {
 Person.nextId = 1;
 class Teacher extends Person {
     constructor(info, specializations = []) {
-        super(info, "teacher");
+        super(info, Role.Teacher);
         this.specializations = [];
         this.courses = [];
         this.specializations = specializations;
@@ -131,13 +150,13 @@ class Teacher extends Person {
 }
 class Student extends Person {
     constructor(info) {
-        super(info, "student");
+        super(info, Role.Student);
         this.academicPerformance = {
             totalCredits: 0,
             gpa: 0,
         };
         this.enrolledCourses = [];
-        this.status = "active";
+        this.status = Status.Active;
     }
     enrollCourse(course) {
         if (this.status !== "active") {

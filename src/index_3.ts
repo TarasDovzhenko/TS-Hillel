@@ -2,6 +2,21 @@
 // Person info: first name, last name, birth day, gender: male, female, other
 // Contact info = ...
 // Full person info = ...;
+enum Role {
+    Student = "student",
+    Teacher = "teacher",
+}
+
+enum Status {
+    Active = "active",
+}
+
+enum Gender {
+    Male = "male",
+    Female = "female",
+    Other = "other",
+}
+
 type StudentType = {
     id: string | number;
     name: string;
@@ -12,7 +27,7 @@ type PersonInfoType = {
     firstName: string;
     lastName: string;
     birthDay: Date;
-    gender: "male" | "female" | "other";
+    gender: Gender.Male | Gender.Female | Gender.Other;
     email: string;
     phone: string;
 };
@@ -147,9 +162,9 @@ class Person {
     id: number;
     gender: string;
     contactInfo: object;
-    role: string;
+    role: Role;
 
-    constructor(info: PersonInfoType, role: string) {
+    constructor(info: PersonInfoType, role: Role) {
         const { firstName, lastName, birthDay, gender, email, phone } = info;
 
         this.firstName = firstName;
@@ -186,7 +201,7 @@ class Teacher extends Person {
     courses: Array<{ name: string }> = [];
 
     constructor(info: PersonInfoType, specializations: string[] = []) {
-        super(info, "teacher");
+        super(info, Role.Teacher);
         this.specializations = specializations;
     }
 
@@ -212,8 +227,8 @@ class Student extends Person {
     status: string;
 
     constructor(info: PersonInfoType) {
-        super(info, "student");
-        this.status = "active";
+        super(info, Role.Student);
+        this.status = Status.Active;
     }
 
     enrollCourse(course: { name: string; credits: number }): void {
