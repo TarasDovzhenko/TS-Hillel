@@ -50,6 +50,10 @@ class Calculator implements ICalculator {
 
 const calculator = new Calculator();
 
-console.log(calculator.calculate("add", 10, 5));
-console.log(calculator.calculate("divide", 20, 4));
-console.log(calculator.calculate("percent", 50, 200));
+// console.log(calculator.add(5, 5));
+// console.log(calculator.subtract(10, 3));
+// console.log(calculator.multiply(4, 6))
+// console.log(calculator.divide(20, 5));
+// console.log(calculator.percent(25, 100));
+// console.log(calculator.calculate("add", 10, 20));
+// console.log(calculator.calculate("percent", 50, 200));
