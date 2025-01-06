@@ -1,17 +1,16 @@
+type Operation = "add" | "subtract" | "multiply" | "divide" | "percent";
+
 interface ICalculator {
     add(a: number, b: number): number;
     subtract(a: number, b: number): number;
     multiply(a: number, b: number): number;
     divide(a: number, b: number): number;
     percent(value: number, total: number): number;
-    calculate(operation: string, ...args: number[]): number;
+    calculate(operation: Operation, ...args: number[]): number;
 }
 
 class Calculator implements ICalculator {
-    calculate(operation: "add" | "subtract" | "multiply" | "divide", a: number, b: number): number;
-    calculate(operation: "percent", value: number, total: number): number;
-
-    calculate(operation: string, ...args: number[]): number | never {
+    calculate(operation: Operation, ...args: number[]): number {
         switch (operation) {
             case "add":
                 return this.add(args[0], args[1]);
@@ -31,25 +30,25 @@ class Calculator implements ICalculator {
     add(a: number, b: number): number {
         return a + b;
     }
+
     subtract(a: number, b: number): number {
         return a - b;
     }
+
     multiply(a: number, b: number): number {
         return a * b;
     }
+
     divide(a: number, b: number): number {
         return a / b;
     }
+
     percent(value: number, total: number): number {
         return (value / total) * 100;
     }
 }
 
 const calculator = new Calculator();
-
-console.log(calculator.calculate("add", 10, 5));
-console.log(calculator.calculate("divide", 20, 4));
-
 
 // console.log(calculator.add(5, 5));
 // console.log(calculator.subtract(10, 3));
