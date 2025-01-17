@@ -4,7 +4,7 @@ type Person = {
 };
 
 function fetchData(): unknown {
-    return { name: "Alice", age: 25 };
+    return { name: "Tara", age: 25 };
 }
 
 function printPersonInfo(person: unknown): asserts person is Person {
