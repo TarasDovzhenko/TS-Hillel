@@ -76,8 +76,8 @@ class Repository {
     }
 }
 const userRepository = new Repository();
-userRepository.add({ id: 1, name: "John Doe" });
+userRepository.add({ id: 1, name: "Taras" });
 console.log(userRepository.getById(1));
 const productRepository = new Repository();
-productRepository.add({ id: 101, title: "Laptop" });
+productRepository.add({ id: 101, title: "Comp" });
 console.log(productRepository.getAll());
