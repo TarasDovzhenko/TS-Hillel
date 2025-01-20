@@ -106,10 +106,10 @@ type User = { id: number; name: string };
 type Product = { id: number; title: string };
 
 const userRepository = new Repository<User>();
-userRepository.add({ id: 1, name: "John Doe" });
+userRepository.add({ id: 1, name: "Taras" });
 console.log(userRepository.getById(1));
 
 const productRepository = new Repository<Product>();
-productRepository.add({ id: 101, title: "Laptop" });
+productRepository.add({ id: 101, title: "Comp" });
 console.log(productRepository.getAll());
 
